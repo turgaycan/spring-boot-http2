@@ -1,6 +1,4 @@
 # Usage is explained in README.md file
-#
-# @author Serdar Kuzucu
 FROM hirokimatsumoto/alpine-openjdk-11
 MAINTAINER info@turgaycan.dev
 
