@@ -94,7 +94,8 @@ if [[ "${newVersion}" = "true" ]]; then
   git push --tags
 fi
 
-docker login -u "${REPOSITORY_USER}" -p "${REPOSITORY_PASS}" "${REPOSITORY}"
+# please comment out below command if auth is enabled
+#docker login -u "${REPOSITORY_USER}" -p "${REPOSITORY_PASS}" "${REPOSITORY}"
 
 # tag the image in local registry
 docker tag "${IMAGE_USER}/${IMAGE_NAME}:latest" "${REPOSITORY}/${IMAGE_USER}/${IMAGE_NAME}:latest"

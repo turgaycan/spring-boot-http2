@@ -1,0 +1,18 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+
+title "http 2 client - server http2 - ok httpclient - http2 server"
+
+participant "Insomnia-rest-http2"
+participant "Spring-boot-app-http2"
+participant "Spring-boot-app-okhttp-client"
+
+"Insomnia-rest-http2" -> "Spring-boot-app-http2": call http2 rest endpoint
+"Spring-boot-app-okhttp-client" -> "Spring-boot-app-http2": ok http client call the employee list rest endpoint
+"Spring-boot-app-http2" -> "Spring-boot-app-okhttp-client": employee list rest response
+"Spring-boot-app-http2" -> "Insomnia-rest-http2": http2 rest response
+
+
+@enduml

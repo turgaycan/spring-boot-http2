@@ -1,0 +1,15 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+
+title "client http 2 - server http2"
+
+participant "Insomnia-rest-http2"
+participant "Spring-boot-app-http2"
+
+"Insomnia-rest-http2" -> "Spring-boot-app-http2": list employees request
+"Spring-boot-app-http2" -> "Insomnia-rest-http2": list employees response
+
+
+@enduml

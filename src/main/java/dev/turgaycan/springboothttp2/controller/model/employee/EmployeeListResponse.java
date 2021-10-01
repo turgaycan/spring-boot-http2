@@ -2,12 +2,14 @@ package dev.turgaycan.springboothttp2.controller.model.employee;
 
 import dev.turgaycan.springboothttp2.controller.model.ResponseStatus;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+@EqualsAndHashCode(callSuper=false)
 @NoArgsConstructor
 @Data
 public class EmployeeListResponse extends ResponseStatus implements Serializable {
