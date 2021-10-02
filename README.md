@@ -265,7 +265,7 @@ http1.1 client
 
 # Static Page
 
-# Testing Tool
+# Client tool - Insomnia
 
 https://insomnia.rest/
 
