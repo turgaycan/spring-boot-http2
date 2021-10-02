@@ -4,10 +4,6 @@ The application is related with sprint boot application with using undertow web 
 
 http2 is binary protocol, you can get more detail information -> https://en.wikipedia.org/wiki/HTTP/2
 
-#add domain hosts file using vim or nano editor
-
-    127.0.0.1 localhost turgay.dev
-
 # Http2 vs Http1
 
 https://www.cloudflare.com/learning/performance/http2-vs-http1.1/
@@ -27,6 +23,10 @@ https://www.cloudflare.com/learning/performance/http2-vs-http1.1/
       - build.sh
       - release.sh
 
+# Add domain hosts file using vim or nano editor
+
+    127.0.0.1 localhost turgay.dev
+    
 # Self-signed cert creation
 
     keytool -genkey -keyalg RSA -alias selfsigned -keystore secure.jks -storepass secret -validity 365
