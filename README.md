@@ -22,6 +22,9 @@ https://www.cloudflare.com/learning/performance/http2-vs-http1.1/
     Docker 
       - build.sh
       - release.sh
+    
+    Insomnia.rest
+    Plantuml    
 
 # Add domain hosts file using vim or nano editor
 
