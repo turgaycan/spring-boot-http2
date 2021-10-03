@@ -31,7 +31,7 @@ public class Http2RestController {
     public CommonStringResponse listEmployees(HttpServletRequest request) throws JsonProcessingException {
         final EmployeeListResponse employeeListResponse = okRestTemplate.getForObject(EMPLOYEE_LIST_URL, EmployeeListResponse.class);
         final String filteredJsonObjectAsString = StringUtils.quote(objectMapper.writeValueAsString(employeeListResponse));
-        final String value = "request protocol : " + request.getProtocol() + ", example.com response : " + filteredJsonObjectAsString;
+        final String value = "request protocol : " + request.getProtocol() + ", turgay.dev response : " + filteredJsonObjectAsString;
         CommonStringResponse commonStringResponse = new CommonStringResponse(value);
         commonStringResponse.ok();
         return commonStringResponse;
