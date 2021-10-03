@@ -2,9 +2,9 @@
 
 The application is related with sprint boot application with using undertow web server and http 2.
 
-http2 is binary protocol, you can get more detail information -> https://en.wikipedia.org/wiki/HTTP/2
+http2 is a binary protocol, you can get more detail information -> https://en.wikipedia.org/wiki/HTTP/2
 
-# Http2 vs Http1
+# Http2 vs Http1.1
 
 https://www.cloudflare.com/learning/performance/http2-vs-http1.1/
 
@@ -67,7 +67,6 @@ PKCS12 came standard in the JDK with Java 9. Although I have used JKS within the
 
 https://en.wikipedia.org/wiki/PKCS_12
 
-
 # OkHttpClient not validate certificates
 
 https://stackoverflow.com/questions/25509296/trusting-all-certificates-with-okhttp
@@ -95,6 +94,142 @@ run docker container via image
     docker run -d -p 443:8443 --name springhttp2 localhost:5000/turgaycan.dev/spring-boot-http2:1.0.2
 
 
+# Client tool - Insomnia.rest
+
+https://insomnia.rest/
+
+The application flow for testing
+
+**test 1**
+
+![client http2 - server http2](docs/http2-server-flow-client_http2.png)
+
+**request**
+
+```javascript
+curl--request GET \
+--url https://turgay.dev/rest/v10/employees
+```
+
+**response**
+
+```javascript
+{
+    "code": "OK",
+        "description": "SUCCESSFUL",
+        "employees": [
+        {
+            "id": 4,
+            "fullname": "Muhammed Nursoy",
+            "email": "muhammed@nursoy.com",
+            "salary": 35100.14,
+            "startDate": 1497042000000
+        },
+        {
+            "id": 3,
+            "fullname": "Fatih Bozik",
+            "email": "fatih@bozik.com",
+            "salary": 25000.14,
+            "startDate": 1497042000000
+        },
+        {
+            "id": 2,
+            "fullname": "Serdar Kuzucu",
+            "email": "serdar@kuzucu.com",
+            "salary": 15000.37,
+            "startDate": 1365541200000
+        },
+        {
+            "id": 1,
+            "fullname": "Turgay Can",
+            "email": "turgay@can.com",
+            "salary": 10000.61,
+            "startDate": 1504126800000
+        }
+    ]
+}
+```
+**Insomnia rest client timeline & http trace**
+
+* Preparing request to https://turgay.dev/rest/v10/employees
+* Current time is 2021-10-01T19:58:55.859Z
+* Using libcurl/7.73.0 OpenSSL/1.1.1k zlib/1.2.11 brotli/1.0.9 zstd/1.4.9 libidn2/2.1.1 libssh2/1.9.0 nghttp2/1.42.0
+* Using HTTP/2
+* Disable timeout
+* Enable automatic URL encoding
+* Disable SSL validation
+* Enable cookie sending with jar of 0 cookies
+* Connection 1 seems to be dead!
+* Closing connection 1
+* TLSv1.3 (OUT), TLS alert, close notify (256):
+* Found bundle for host turgay.dev: 0x7f98c71a4690 [can multiplex]
+* Re-using existing connection! (#2) with host turgay.dev
+* Connected to turgay.dev (127.0.0.1) port 443 (#2)
+* Using Stream ID: 3 (easy handle 0x7f98c0920a00)
+
+> GET /rest/v10/employees HTTP/2
+> Host: turgay.dev
+> user-agent: insomnia/2021.5.3
+> accept: */*
+
+< HTTP/2 200
+< content-type: application/json
+< date: Fri, 01 Oct 2021 19:58:55 GMT
+
+
+* Received 480 B chunk
+* Connection #2 to host turgay.dev left intact
+
+--
+
+**test 2**
+
+![http2-cert-client-call-http2-server-via-okhttpclient](docs/http2-cert-client-call-http2-server-via-okhttpclient.png)
+
+**request**
+
+```javascript
+curl --request GET \
+--url https://turgay.dev/rest/v10/http2
+```
+**response**
+
+```javascript
+{
+  "code": "OK",
+  "description": "SUCCESSFUL",
+  "value": "request protocol : HTTP/2.0, example.com response : '{\"code\":\"OK\",\"description\":\"SUCCESSFUL\",\"employees\":[{\"id\":4,\"fullname\":\"Muhammed Nursoy\",\"email\":\"muhammed@nursoy.com\",\"salary\":35100.14,\"startDate\":1497042000000},{\"id\":3,\"fullname\":\"Fatih Bozik\",\"email\":\"fatih@bozik.com\",\"salary\":25000.14,\"startDate\":1497042000000},{\"id\":2,\"fullname\":\"Serdar Kuzucu\",\"email\":\"serdar@kuzucu.com\",\"salary\":15000.37,\"startDate\":1365541200000},{\"id\":1,\"fullname\":\"Turgay Can\",\"email\":\"turgay@can.com\",\"salary\":10000.61,\"startDate\":1504126800000}]}'"
+}
+```
+
+**Insomnia rest client timeline & http trace**
+
+* Preparing request to https://turgay.dev/rest/v10/http2
+* Current time is 2021-10-01T20:53:49.290Z
+* Using libcurl/7.73.0 OpenSSL/1.1.1k zlib/1.2.11 brotli/1.0.9 zstd/1.4.9 libidn2/2.1.1 libssh2/1.9.0 nghttp2/1.42.0
+* Using HTTP 1.1
+* Disable timeout
+* Enable automatic URL encoding
+* Disable SSL validation
+* Enable cookie sending with jar of 0 cookies
+* Found bundle for host turgay.dev: 0x7f98c7c826e0 [can multiplex]
+* Re-using existing connection! (#3) with host turgay.dev
+* Connected to turgay.dev (127.0.0.1) port 443 (#3)
+* Using Stream ID: 4b (easy handle 0x7f98c30c4000)
+
+> GET /rest/v10/http2 HTTP/2
+> Host: turgay.dev
+> user-agent: insomnia/2021.5.3
+> accept: */*
+
+< HTTP/2 200
+< content-type: application/json
+< date: Fri, 01 Oct 2021 20:53:49 GMT
+
+
+* Received 651 B chunk
+* Connection #3 to host turgay.dev left intact
+
 # Performance Metrics
 
 h2load tool
@@ -105,8 +240,6 @@ h2load tool
 http1.1 client vs http2 client -> http2 server
 
 # REST API
-
-Overall results
 
 **test 1 result**
 
@@ -265,97 +398,5 @@ http1.1 client
 
 # Static Page
 
-# Client tool - Insomnia
-
-https://insomnia.rest/
-
-
-The application flow for testing
-
-![client http2 - server http2](flows/http2-server-flow-client_http2.png)
-
-**request**
-
-```javascript
-curl--request GET \
---url https://turgay.dev/rest/v10/employees
-```
-
-**response**
-
-```javascript
-{
-    "code": "OK",
-        "description": "SUCCESSFUL",
-        "employees": [
-        {
-            "id": 4,
-            "fullname": "Muhammed Nursoy",
-            "email": "muhammed@nursoy.com",
-            "salary": 35100.14,
-            "startDate": 1497042000000
-        },
-        {
-            "id": 3,
-            "fullname": "Fatih Bozik",
-            "email": "fatih@bozik.com",
-            "salary": 25000.14,
-            "startDate": 1497042000000
-        },
-        {
-            "id": 2,
-            "fullname": "Serdar Kuzucu",
-            "email": "serdar@kuzucu.com",
-            "salary": 15000.37,
-            "startDate": 1365541200000
-        },
-        {
-            "id": 1,
-            "fullname": "Turgay Can",
-            "email": "turgay@can.com",
-            "salary": 10000.61,
-            "startDate": 1504126800000
-        }
-    ]
-}
-```
-**Insomnia rest client timeline & http trace**
-
-* Preparing request to https://turgay.dev/rest/v10/employees
-* Current time is 2021-10-01T19:58:55.859Z
-* Using libcurl/7.73.0 OpenSSL/1.1.1k zlib/1.2.11 brotli/1.0.9 zstd/1.4.9 libidn2/2.1.1 libssh2/1.9.0 nghttp2/1.42.0
-* Using HTTP/2
-* Disable timeout
-* Enable automatic URL encoding
-* Disable SSL validation
-* Enable cookie sending with jar of 0 cookies
-* Connection 1 seems to be dead!
-* Closing connection 1
-* TLSv1.3 (OUT), TLS alert, close notify (256):
-* Found bundle for host turgay.dev: 0x7f98c71a4690 [can multiplex]
-* Re-using existing connection! (#2) with host turgay.dev
-* Connected to turgay.dev (127.0.0.1) port 443 (#2)
-* Using Stream ID: 3 (easy handle 0x7f98c0920a00)
-
-> GET /rest/v10/employees HTTP/2
-> Host: turgay.dev
-> user-agent: insomnia/2021.5.3
-> accept: */*
-
-< HTTP/2 200
-< content-type: application/json
-< date: Fri, 01 Oct 2021 19:58:55 GMT
-
-
-* Received 480 B chunk
-* Connection #2 to host turgay.dev left intact
-
---
-
-
-curl --request GET \
---url https://turgay.dev/rest/v10/http2
-
-
-
+Loading...
 
